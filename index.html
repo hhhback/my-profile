@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JUNGUEL LEE · Machine Learning Engineer</title>
+<meta name="description" content="이준걸 (JUNGUEL LEE) — Machine Learning Engineer @ NAVER Corp. 검색·추천 시스템, VLM, GNN, LLM Application." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #0d0d10;
+    --ink-soft: #44464d;
+    --muted: #8a8d96;
+    --line: #ededf0;
+    --accent: #03c75a;          /* NAVER green */
+    --accent-ink: #02a14a;
+    --maxw: 1180px;
+    --shadow: 0 1px 2px rgba(13,13,16,.04), 0 18px 40px -22px rgba(13,13,16,.22);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.02em;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+
+  /* ---------- Top Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; height: 76px; gap: 36px; }
+  .logo { font-size: 25px; font-weight: 900; letter-spacing: -0.04em; flex: 0 0 auto; }
+  .logo .light { font-weight: 600; color: var(--muted); margin-left: 6px; letter-spacing: -0.02em; }
+  .menu { display: flex; gap: 30px; flex: 1 1 auto; overflow-x: auto; scrollbar-width: none; }
+  .menu::-webkit-scrollbar { display: none; }
+  .menu button {
+    appearance: none; background: none; border: none; font-family: inherit; cursor: pointer;
+    font-size: 17px; font-weight: 700; color: var(--ink-soft);
+    padding: 6px 0; white-space: nowrap; position: relative; transition: color .15s;
+    letter-spacing: -0.02em;
+  }
+  .menu button:hover { color: var(--ink); }
+  .menu button[aria-selected="true"] { color: var(--ink); }
+  .menu button[aria-selected="true"]::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+    background: var(--accent); border-radius: 3px;
+  }
+  .nav-right { display: flex; gap: 22px; flex: 0 0 auto; }
+  .nav-right a { font-size: 15px; font-weight: 700; color: var(--ink-soft); text-decoration: none; transition: color .15s; }
+  .nav-right a:hover { color: var(--accent-ink); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 560px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 500px at 28% 32%, rgba(96,72,190,.55), transparent 60%),
+      radial-gradient(760px 520px at 76% 68%, rgba(3,199,90,.40), transparent 55%),
+      radial-gradient(600px 600px at 60% 18%, rgba(40,90,200,.35), transparent 60%),
+      linear-gradient(165deg, #070712 0%, #0c0d1e 45%, #081512 100%);
+  }
+  /* star dust */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 22%, rgba(255,255,255,.9), transparent),
+      radial-gradient(1.2px 1.2px at 84% 16%, rgba(255,255,255,.8), transparent),
+      radial-gradient(1.6px 1.6px at 66% 78%, rgba(255,255,255,.85), transparent),
+      radial-gradient(1px 1px at 33% 64%, rgba(255,255,255,.7), transparent),
+      radial-gradient(1.3px 1.3px at 50% 38%, rgba(255,255,255,.75), transparent),
+      radial-gradient(1px 1px at 22% 84%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1.5px 1.5px at 90% 56%, rgba(255,255,255,.8), transparent),
+      radial-gradient(1px 1px at 8% 52%, rgba(255,255,255,.6), transparent);
+  }
+  .hero-title {
+    position: relative; z-index: 1; text-align: center; padding: 90px 24px 120px;
+    animation: floaty 7s ease-in-out infinite;
+    transition: transform .25s cubic-bezier(.2,.7,.2,1);
+    will-change: transform;
+  }
+  .hero-title .big {
+    font-size: clamp(48px, 11vw, 150px);
+    font-weight: 900; line-height: .92; letter-spacing: -0.05em;
+    background: linear-gradient(100deg,
+      rgba(255,255,255,.10) 24%,
+      rgba(255,255,255,.55) 47%,
+      rgba(255,255,255,.95) 52%,
+      rgba(255,255,255,.10) 76%);
+    background-size: 220% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    opacity: 0; transform: translateY(20px);
+    animation: reveal .9s cubic-bezier(.2,.7,.2,1) forwards,
+               shimmer 6.5s linear .9s infinite;
+  }
+  .hero-title .big .v {
+    -webkit-text-fill-color: #1fe07a; color: #1fe07a;
+    animation: vglow 2.6s ease-in-out infinite;
+  }
+  .hero-title .sub {
+    margin-top: 26px; font-size: clamp(15px, 2vw, 20px); font-weight: 600;
+    color: rgba(255,255,255,.82); letter-spacing: 0;
+    opacity: 0; animation: reveal .9s cubic-bezier(.2,.7,.2,1) .35s forwards;
+  }
+  .hero-title .sub b { color: var(--accent); font-weight: 800; }
+
+  @keyframes shimmer { from { background-position: 200% center; } to { background-position: -20% center; } }
+  @keyframes floaty  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-13px); } }
+  @keyframes reveal  { to { opacity: 1; transform: translateY(0); } }
+  @keyframes vglow {
+    0%,100% { text-shadow: 0 0 16px rgba(3,199,90,.45); }
+    50%     { text-shadow: 0 0 36px rgba(3,199,90,.95); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title, .hero-title .big, .hero-title .big .v, .hero-title .sub { animation: none; opacity: 1; transform: none; }
+    .hero-title .big { -webkit-text-fill-color: rgba(255,255,255,.18); color: rgba(255,255,255,.18); background: none; }
+    .hero-title .big .v { -webkit-text-fill-color: rgba(3,199,90,.6); color: rgba(3,199,90,.6); }
+  }
+
+  /* ---------- Overlap info bar (검색바 느낌) ---------- */
+  .infobar-anchor { position: relative; z-index: 5; }
+  .infobar {
+    margin: -52px auto 0;
+    background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+    display: grid; grid-template-columns: auto 1fr auto auto; align-items: stretch;
+    overflow: hidden; border: 1px solid var(--line);
+  }
+  .infobar .cell { padding: 22px 26px; display: flex; align-items: center; gap: 16px; border-left: 1px solid var(--line); }
+  .infobar .cell:first-child { border-left: none; }
+  .infobar .cell .k { font-size: 12px; font-weight: 800; color: var(--accent-ink); letter-spacing: .02em; }
+  .infobar .cell .vlabel { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .infobar .cell .sm { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+  .avatar {
+    position: relative; width: 64px; height: 64px; border-radius: 50%; flex: 0 0 auto;
+    background: linear-gradient(135deg, #e9efff, #e7fbf0); display: grid; place-items: center;
+    overflow: hidden; border: 1px solid var(--line);
+  }
+  .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .avatar__mono { font-size: 22px; font-weight: 900; color: var(--accent-ink); }
+  .infobar .name h2 { font-size: 19px; font-weight: 900; letter-spacing: -0.03em; }
+  .infobar .name .en { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
+  .infobar .cta {
+    background: var(--ink); color: #fff; font-weight: 800; font-size: 15px;
+    text-decoration: none; padding: 0 34px; display: flex; align-items: center;
+    transition: background .15s; border-left: none;
+  }
+  .infobar .cta:hover { background: var(--accent); }
+
+  /* ---------- Sections / Panels ---------- */
+  main { padding: 92px 0 120px; }
+  .panel { display: none; animation: fade .45s ease; }
+  .panel.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: translateY(0);} }
+
+  .page-title { font-size: clamp(44px, 7vw, 88px); font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+  .page-title .dot { color: var(--accent); }
+  .page-sub { margin-top: 18px; font-size: 18px; color: var(--muted); font-weight: 600; max-width: 620px; }
+
+  .block { margin-top: 64px; }
+  .eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+
+  .lead { font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; line-height: 1.55; letter-spacing: -0.03em; max-width: 880px; }
+  .lead .hl { color: var(--accent-ink); }
+
+  /* Card */
+  .card { border-top: 1px solid var(--line); padding: 30px 0; }
+  .card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; }
+  .card h3 { font-size: 23px; font-weight: 800; letter-spacing: -0.03em; }
+  .card .org { font-size: 16px; font-weight: 700; color: var(--accent-ink); margin-top: 4px; }
+  .card .place { font-size: 14px; color: var(--muted); margin-top: 2px; font-weight: 600; }
+  .card .period { font-size: 15px; color: var(--muted); white-space: nowrap; font-weight: 700; }
+  .card .body { margin-top: 18px; color: var(--ink-soft); font-size: 16px; }
+  .card .body .team { font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+  .card .body ul { list-style: none; }
+  .card .body li { position: relative; padding-left: 18px; margin: 7px 0; }
+  .card .body li::before { content: ""; position: absolute; left: 2px; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .card .note { margin-top: 14px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  .meta-link { color: var(--accent-ink); text-decoration: none; font-weight: 800; }
+  .meta-link:hover { text-decoration: underline; }
+  .badge { display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 800; color: var(--accent-ink); background: #e7fbf0; border-radius: 999px; padding: 4px 10px; margin-left: 10px; vertical-align: middle; }
+
+  /* stat grid */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  .stats .s { padding: 30px 0; border-left: 1px solid var(--line); padding-left: 28px; }
+  .stats .s:first-child { border-left: none; padding-left: 0; }
+  .stats .s .num { font-size: 44px; font-weight: 900; letter-spacing: -0.04em; }
+  .stats .s .lab { font-size: 14px; color: var(--muted); font-weight: 700; margin-top: 4px; }
+
+  /* skills */
+  .skill-group { margin-top: 40px; }
+  .skill-group h4 { font-size: 16px; font-weight: 800; margin-bottom: 16px; }
+  .cloud .tag { display: inline-block; font-size: 16px; font-weight: 700; color: var(--ink); border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 18px; margin: 0 8px 10px 0; transition: all .15s; }
+  .cloud .tag:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .cloud .tag.key { color: #fff; background: var(--ink); border-color: var(--ink); }
+  .cloud .tag.key:hover { background: var(--accent); border-color: var(--accent); color:#fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 64px; font-size: 14px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer a { color: var(--ink-soft); text-decoration: none; font-weight: 700; }
+  footer a:hover { color: var(--accent-ink); }
+
+  @media (max-width: 860px) {
+    .wrap { padding: 0 22px; }
+    .nav .wrap { gap: 18px; }
+    .nav-right { display: none; }
+    .infobar { grid-template-columns: 1fr; }
+    .infobar .cell { border-left: none; border-top: 1px solid var(--line); }
+    .infobar .cell:first-child { border-top: none; }
+    .infobar .cta { padding: 20px; justify-content: center; }
+    .stats { grid-template-columns: 1fr; }
+    .stats .s { border-left: none; padding-left: 0; border-top: 1px solid var(--line); }
+    .stats .s:first-child { border-top: none; }
+    main { padding: 64px 0 90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap">
+    <div class="logo">JUNGUEL<span class="light">Lee</span></div>
+    <div class="menu" role="tablist">
+      <button role="tab" aria-selected="true"  data-panel="about">소개</button>
+      <button role="tab" aria-selected="false" data-panel="career">경력</button>
+      <button role="tab" aria-selected="false" data-panel="research">연구·특허</button>
+      <button role="tab" aria-selected="false" data-panel="activity">활동·수상</button>
+      <button role="tab" aria-selected="false" data-panel="skills">스킬</button>
+    </div>
+    <div class="nav-right">
+      <a href="https://www.linkedin.com/in/junguel-lee-1a3118200" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dacon.io/myprofile/448300/competition" target="_blank" rel="noopener">Dacon</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-title">
+    <div class="big">We the Na<span class="v">V</span>igators</div>
+    <div class="sub"><b>Machine Learning Engineer</b> @ NAVER Corp · 검색과 추천으로 사용자의 취향을 잇습니다</div>
+  </div>
+</section>
+
+<!-- INFO BAR -->
+<div class="infobar-anchor">
+  <div class="wrap">
+    <div class="infobar">
+      <div class="cell name">
+        <div class="avatar">
+          <span class="avatar__mono">JL</span>
+          <img src="profile.jpg" alt="JUNGUEL LEE" onerror="this.style.display='none'" />
+        </div>
+        <div>
+          <h2>이준걸</h2>
+          <div class="en">JUNGUEL LEE</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div>
+          <div class="k">직무</div>
+          <div class="vlabel">Machine Learning Engineer</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div>
+          <div class="k">소속 · 지역</div>
+          <div class="sm">NAVER Corp · Seoul, KR</div>
+        </div>
+      </div>
+      <a class="cta" href="https://www.linkedin.com/in/junguel-lee-1a3118200" target="_blank" rel="noopener">Connect ↗</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <!-- ABOUT -->
+    <section class="panel active" id="about" role="tabpanel">
+      <h1 class="page-title">About<span class="dot">.</span></h1>
+      <p class="page-sub">데이터에서 취향과 맥락을 읽어 더 나은 추천 경험으로 잇습니다.</p>
+
+      <div class="block">
+        <p class="lead">
+          검색과 추천 시스템을 연구·개발하는 <span class="hl">Machine Learning Engineer</span>입니다.
+          NAVER Corp에서 Vision-Language Model, GNN 기반 추천, LLM Application을
+          실제 서비스에 적용하며, 사용자의 취향과 맥락을 더 나은 경험으로 연결하는 문제를 다룹니다.
+        </p>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">Focus Areas</div>
+        <div class="card" style="border-top:none;padding-top:0;">
+          <div class="body" style="margin-top:0;">
+            <ul>
+              <li><strong>Vision-Language Model (VLM)</strong> — 멀티모달 표현 학습 및 추천 적용</li>
+              <li><strong>Recommendation System (RS)</strong> — USER / POI / UGC 추천</li>
+              <li><strong>Graph Neural Network (GNN)</strong> — 지식그래프 기반 추천</li>
+              <li><strong>NLP &amp; LLM Application</strong> — 언어 모델의 서비스 응용</li>
+              <li><strong>ML / Data Mining &amp; Data Science</strong> — 데이터 마이닝 알고리즘, 예측 모델링</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">At a Glance</div>
+        <div class="stats">
+          <div class="s"><div class="num">5<span style="font-size:24px;">년+</span></div><div class="lab">NAVER ML Engineer 경력</div></div>
+          <div class="s"><div class="num">2 · 3</div><div class="lab">특허 · 논문</div></div>
+          <div class="s"><div class="num">대상</div><div class="lab">Factory Hack Korea</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREER -->
+    <section class="panel" id="career" role="tabpanel">
+      <h1 class="page-title">Career<span class="dot">.</span></h1>
+      <p class="page-sub">검색·추천 시스템을 만드는 5년 이상의 여정.</p>
+
+      <div class="block">
+        <div class="card">
+          <div class="row">
+            <div>
+              <h3>Machine Learning Engineer</h3>
+              <div class="org">NAVER Corp · Full-time</div>
+              <div class="place">Seongnam, Gyeonggi, South Korea</div>
+            </div>
+            <div class="period">2021. 01 – 현재 · 5년 6개월</div>
+          </div>
+          <div class="body">
+            <div class="team">TEAM AirSPACE</div>
+            <ul>
+              <li>검색 및 추천 시스템 연구개발</li>
+              <li>관련 지식: Data Science · VLM(Vision-Language Model) · Recommendation Model · LLM Application</li>
+            </ul>
+            <div class="note">
+              관련 발표 — PLAY NAVER · [Commerce AI] USER/POI/UGC Recommendation using GNN (전영환, 김준형, 이준걸)
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <div>
+              <h3>Big Data Analyst</h3>
+              <div class="org">SK Networks · Part-time</div>
+              <div class="place">Seoul, South Korea</div>
+            </div>
+            <div class="period">2019. 08 – 2020. 05 · 10개월</div>
+          </div>
+          <div class="body">
+            <ul><li>이탈 고객 예측 모델 개발 프로젝트 참여</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">In the Press · AiRSPACE</div>
+        <p class="page-sub" style="margin-top:0;margin-bottom:8px;">
+          소속 팀 <b style="color:var(--ink);">TEAM AirSPACE</b>의 AI 장소 추천 기술이 네이버 지도 '발견' 탭과
+          플레이스 추천에 적용되어 다수 언론에 소개되었습니다 —
+          날씨·또래·시간대·특별한 날 등 상황 맥락에 맞춘 초개인화 장소 추천.
+        </p>
+        <div class="card">
+          <div class="row">
+            <h3>네이버 지도앱에 '발견' 탭 신규 도입…취향 맞는 장소 손쉽게 탐색</h3>
+            <a class="meta-link" href="https://www.etnews.com/20250619000309" target="_blank" rel="noopener">전자신문 ↗</a>
+          </div>
+          <div class="note">
+            2025. 06. 19 · 기존 '주변' 탭을 고도화한 AI 개인화 장소 추천. 검색·공유 기록 기반 맞춤 추천 +
+            HyperCLOVA X로 장소 특징 키워드 요약.
+            다른 보도 —
+            <a class="meta-link" href="https://www.asiae.co.kr/article/2025061909384684639" target="_blank" rel="noopener">아시아경제</a> ·
+            <a class="meta-link" href="https://www.sedaily.com/article/14080727" target="_blank" rel="noopener">서울경제</a> ·
+            <a class="meta-link" href="https://www.inews24.com/view/1856264" target="_blank" rel="noopener">아이뉴스24</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <h3>네이버 AI로 '취향 맛집' 제공…날씨·또래·시간별 장소도 추천</h3>
+            <a class="meta-link" href="https://www.hankyung.com/article/202407141634Y" target="_blank" rel="noopener">한국경제 ↗</a>
+          </div>
+          <div class="note">2024. 07. 14 · AiRSPACE 기반 초개인화 장소 추천 (날씨 · 내 또래 · 특별한 날 · 시간대)</div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <h3>네이버, AI로 초개인화 맛집 추천…날씨·시간대 등 장소도 추천</h3>
+            <a class="meta-link" href="https://www.asiatoday.co.kr/kn/view.php?key=20240714010008609" target="_blank" rel="noopener">아시아투데이 ↗</a>
+          </div>
+          <div class="note">2024. 07. 14</div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <h3>맛집도 취향저격…네이버 플레이스, AI로 장소 추천 초개인화</h3>
+            <a class="meta-link" href="https://news.nate.com/view/20251107n25202" target="_blank" rel="noopener">기사 ↗</a>
+          </div>
+          <div class="note">2025. 11. 07 · AI 페르소나 기반 플레이스 추천</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="panel" id="research" role="tabpanel">
+      <h1 class="page-title">Research<span class="dot">.</span></h1>
+      <p class="page-sub">논문 · 특허 · 프로젝트로 남긴 연구 결과.</p>
+
+      <div class="block">
+        <div class="eyebrow">Publications</div>
+        <div class="card">
+          <div class="row">
+            <h3>Offline Reasoning for Efficient Recommendation: LLM-Empowered Persona-Profiled Item Indexing</h3>
+            <a class="meta-link" href="https://arxiv.org/abs/2602.21756" target="_blank" rel="noopener">arXiv ↗</a>
+          </div>
+          <div class="note">
+            Persona4Rec — LLM으로 아이템 리뷰를 오프라인 추론해 해석 가능한 페르소나 표현을 만들고,
+            사용자 프로필과 정렬해 실시간 추천 지연을 낮추는 프레임워크. (연세대 · NAVER 공저)
+            · arXiv:2602.21756 · 2026. 02
+          </div>
+        </div>
+        <div class="card">
+          <h3>Automobile parts reliability prediction based on claim data</h3>
+          <div class="note">The comparison of predictive effects with deep learning — Engineering Failure Analysis, Vol. 129, 105657 · 2021. 11. 01</div>
+        </div>
+        <div class="card">
+          <h3>LSTM 기반 딥러닝을 이용한 일사량 이미지 생성</h3>
+          <div class="note">2020 한국데이터마이닝학회 · 2020. 11. 26</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">Patents</div>
+        <div class="card">
+          <h3>Recommendation based on Local Knowledge Graph</h3>
+          <div class="note">METHOD, COMPUTER DEVICE, AND COMPUTER PROGRAM TO PROVIDE RECOMMENDATION BASED ON LOCAL KNOWLEDGE GRAPH · 출원 10-2022-0051375</div>
+        </div>
+        <div class="card">
+          <h3>Dynamic Sub-item Recommendation for Search Results</h3>
+          <div class="note">METHOD, SYSTEM, AND COMPUTER PROGRAM TO DYNAMICALLY PROVIDE SUB-ITEM RECOMMENDATION LIST … BASED ON SEARCH QUERY · 출원 10-2021-0115664</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">Projects</div>
+        <div class="card">
+          <div class="row">
+            <h3>클레임 데이터 기반 내구열화 부품 발췌 및 고장 패턴 예측</h3>
+            <div class="period">2020. 03 – 2020. 12</div>
+          </div>
+          <div class="body"><ul><li>딥러닝 기반 미래 고장 패턴 예측 모델 개발</li></ul></div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <h3>반려동물 감정분석 A.I 개발</h3>
+            <div class="period">2019. 06 – 2020. 04</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section class="panel" id="activity" role="tabpanel">
+      <h1 class="page-title">Activity<span class="dot">.</span></h1>
+      <p class="page-sub">수상 · 커뮤니티 · 강의, 그리고 경진대회.</p>
+
+      <div class="block">
+        <div class="eyebrow">Honors &amp; Awards</div>
+        <div class="card">
+          <div class="row">
+            <h3>Factory Hack Korea 대상 <span class="badge">1st Prize</span></h3>
+            <div class="period">2019. 01</div>
+          </div>
+          <div class="body">
+            제1회 팩토리핵 코리아(FACTORY HACK KOREA) 대상.
+            <ul>
+              <li>주최: 산업통상자원부 · 한국산업기술진흥원 / 주관: 전자부품연구원</li>
+              <li>참여·후원: POSTECH, 고려대학교, SK텔레콤, 마키나락스 등</li>
+              <li>제조산업 전반에 빅데이터·AI를 적용해 생산성 향상 및 새로운 가치 창출</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">Community &amp; Teaching</div>
+        <div class="card">
+          <div class="row">
+            <h3>TOBIGS 10기 회장</h3>
+            <div class="period">2018. 07 – 2020</div>
+          </div>
+          <div class="body"><ul><li>빅데이터 연합 학회 TOBIGS 10기 회장</li></ul></div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <h3>현대모비스 AI 교육 강사</h3>
+            <div class="period">2020. 01 – 2020. 07</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="eyebrow">Competitions</div>
+        <div class="card">
+          <div class="row">
+            <h3>Dacon 데이터 경진대회</h3>
+            <a class="meta-link" href="https://dacon.io/myprofile/448300/competition" target="_blank" rel="noopener">프로필 바로가기 →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="panel" id="skills" role="tabpanel">
+      <h1 class="page-title">Skills<span class="dot">.</span></h1>
+      <p class="page-sub">전문 분야와 검증된 역량.</p>
+
+      <div class="skill-group">
+        <h4>핵심 전문 분야</h4>
+        <div class="cloud">
+          <span class="tag key">Vision-Language Model</span>
+          <span class="tag key">Recommendation System</span>
+          <span class="tag key">GNN</span>
+          <span class="tag key">NLP</span>
+          <span class="tag key">LLM Application</span>
+          <span class="tag key">Data Mining</span>
+          <span class="tag key">Data Science</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>검증된 스킬 <span class="badge">LinkedIn</span></h4>
+        <div class="cloud">
+          <span class="tag">Machine Learning · Skill Assessment 통과</span>
+          <span class="tag">Data Science · 동료 4인 추천</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>연락</h4>
+        <div class="cloud">
+          <a class="tag" href="https://www.linkedin.com/in/junguel-lee-1a3118200" target="_blank" rel="noopener" style="text-decoration:none;">LinkedIn ↗</a>
+          <a class="tag" href="https://dacon.io/myprofile/448300/competition" target="_blank" rel="noopener" style="text-decoration:none;">Dacon ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:12px;">
+    <span>© 2026 JUNGUEL LEE · Machine Learning Engineer</span>
+    <span>
+      <a href="https://www.linkedin.com/in/junguel-lee-1a3118200" target="_blank" rel="noopener">LinkedIn</a> ·
+      <a href="https://dacon.io/myprofile/448300/competition" target="_blank" rel="noopener">Dacon</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Hero parallax — subtle tilt following the cursor
+  const hero = document.querySelector('.hero');
+  const heroTitle = document.querySelector('.hero-title');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (hero && heroTitle && !reduceMotion) {
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5;
+      const dy = (e.clientY - r.top) / r.height - 0.5;
+      heroTitle.style.transform = `translate(${dx * 26}px, ${dy * 16}px)`;
+    });
+    hero.addEventListener('mouseleave', () => { heroTitle.style.transform = ''; });
+  }
+
+  const tabs = document.querySelectorAll('.menu button');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.setAttribute('aria-selected', 'true');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
